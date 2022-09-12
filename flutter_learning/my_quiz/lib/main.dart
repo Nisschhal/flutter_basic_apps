@@ -44,14 +44,16 @@ class _MyAppState extends State<MyApp> {
   // callback function to increment the questionIndex
   void _answerQuestion(int score) {
     _totalScore += score; // since it only displayes its a static state
-    setState(() =>
-        _questionIndex++); // based on the index value gets changes thus dynamic state
+    setState(() {
+      _questionIndex++;
+    }); // based on the index value gets changes thus dynamic state
     print("Question index at !!");
     print(_questionIndex);
   }
 
   void _resetHandler() {
     setState(() {
+      _totalScore = 0;
       _questionIndex = 0;
     });
   }

@@ -26,8 +26,13 @@ class Result extends StatelessWidget {
       child: Column(
         children: [
           Text(resultText),
-          ElevatedButton(
-              onPressed: resetHandler, child: const Text("Restart Quiz"))
+          OutlinedButton(
+            style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.amber,
+                side: const BorderSide(color: Colors.amber)),
+            onPressed: resetHandler,
+            child: const Text("Restart Quiz!"),
+          )
         ],
       ),
     );
