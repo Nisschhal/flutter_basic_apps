@@ -21,17 +21,29 @@ class _MyAppState extends State<MyApp> {
   final _questions = const [
     {
       'questionText': "What is your favourite colors?",
-      'answers': ['green', 'blue', 'yellow', 'red']
+      'answers': [
+        {'text': 'red', 'score': 10},
+        {'text': 'green', 'score': 6},
+        {'text': 'blue', 'score': 4},
+        {'text': 'black', 'score': 2},
+      ]
     },
     {
       'questionText': "What\'s you best game?",
-      'answers': ['football', 'cricket', 'baseball', 'tennis']
+      'answers': [
+        {'text': 'football', 'score': 10},
+        {'text': 'cricket', 'score': 6},
+        {'text': 'baseball', 'score': 4},
+        {'text': 'tennis', 'score': 2},
+      ]
     }
   ];
   var _questionIndex = 0;
+  var _totalScore = 0;
 
   // callback function to increment the questionIndex
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
     setState(() => _questionIndex++);
     print("Question index at !!");
     print(_questionIndex);
