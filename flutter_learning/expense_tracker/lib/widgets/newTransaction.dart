@@ -44,8 +44,11 @@ class NewTransaction extends StatelessWidget {
                 onSubmitted: (_) => _addTransaction(),
                 keyboardType: TextInputType.number,
               ),
-              TextButton(
-                style: TextButton.styleFrom(foregroundColor: Colors.purple),
+              OutlinedButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.purple,
+                  side: const BorderSide(color: Colors.purple),
+                ),
                 onPressed: _addTransaction,
                 child: const Text('Add Transaction'),
               )
