@@ -5,7 +5,17 @@ import 'package:expense_tracker/widgets/userTransaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-void main() => runApp(ExpenseTrackerApp());
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter App',
+      home: ExpenseTrackerApp(),
+    );
+  }
+}
 
 class ExpenseTrackerApp extends StatefulWidget {
   @override
@@ -32,12 +42,13 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     });
   }
 
-  void showNewTransaction(BuildContext context) {
+  void _showNewTransaction(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return NewTransaction(_addNewTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return NewTransaction(_addNewTransaction);
+      },
+    );
   }
 
   @override
@@ -48,14 +59,14 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           title: const Text('Personal Expenses Tracker'),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () => _showNewTransaction(context),
               icon: const Icon(Icons.add),
             ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.purple,
-          onPressed: () {},
+          onPressed: () => _showNewTransaction(context),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
   final Function _addNewTransactionHandler;
   NewTransaction(this._addNewTransactionHandler, {super.key});
 
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
+
   final priceController = TextEditingController();
 
   void _addTransaction() {
@@ -14,8 +20,10 @@ class NewTransaction extends StatelessWidget {
     if (enteredTitle.isEmpty || enteredPrice <= 0) {
       return;
     }
-    _addNewTransactionHandler(enteredTitle, enteredPrice);
+    widget._addNewTransactionHandler(enteredTitle, enteredPrice);
     _resetTexFields();
+    // pop off the latest widget from the widget tree.
+    Navigator.of(context).pop();
   }
 
   void _resetTexFields() {
