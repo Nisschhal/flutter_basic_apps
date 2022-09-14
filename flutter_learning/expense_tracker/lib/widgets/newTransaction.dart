@@ -36,12 +36,13 @@ class NewTransaction extends StatelessWidget {
                   labelText: 'Title',
                 ),
                 controller: titleController,
-                onSubmitted: (_) => _addTransaction,
+                onSubmitted: (_) => _addTransaction(),
               ),
               TextField(
                 decoration: const InputDecoration(labelText: 'Price'),
                 controller: priceController,
-                onSubmitted: (_) => _addTransaction,
+                onSubmitted: (_) => _addTransaction(),
+                keyboardType: TextInputType.number,
               ),
               TextButton(
                 style: TextButton.styleFrom(foregroundColor: Colors.purple),
