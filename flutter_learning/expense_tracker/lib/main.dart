@@ -1,5 +1,6 @@
 import 'package:expense_tracker/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(ExpenseTrackerApp());
 
@@ -11,19 +12,22 @@ class ExpenseTrackerApp extends StatefulWidget {
 }
 
 class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
+  final List<Transaction> transactions = [
+    Transaction(id: '01', title: 'Shoe', price: 100, date: DateTime.now()),
+    Transaction(id: '02', title: 'Bag', price: 200, date: DateTime.now()),
+  ];
+  final titleController = TextEditingController();
+  final priceController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final List<Transaction> transactions = [
-      Transaction(id: '01', title: 'Shoe', price: 100, date: DateTime.now()),
-      Transaction(id: '02', title: 'Bag', price: 200, date: DateTime.now()),
-    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Personal Expenses Tracker'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
@@ -32,6 +36,33 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
                 elevation: 5,
                 child: Text("CHART"),
               ),
+            ),
+            Card(
+              child: Container(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Title',
+                        ),
+                        controller: titleController,
+                      ),
+                      TextField(
+                        decoration: const InputDecoration(labelText: 'Price'),
+                        controller: priceController,
+                      ),
+                      TextButton(
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.purple),
+                          onPressed: () {
+                            print(titleController.text);
+                            print(priceController.text);
+                          },
+                          child: const Text('Add Transaction'))
+                    ],
+                  )),
             ),
             Column(
               children: [
@@ -62,7 +93,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            tx.date.toString(),
+                            DateFormat.yMMMd().format(tx.date),
                             style: const TextStyle(color: Colors.grey),
                           ),
                         ],
