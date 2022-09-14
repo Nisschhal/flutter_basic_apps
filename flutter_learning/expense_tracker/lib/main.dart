@@ -6,14 +6,7 @@ import 'package:intl/intl.dart';
 
 void main() => runApp(ExpenseTrackerApp());
 
-class ExpenseTrackerApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _ExpenseTrackerAppState();
-  }
-}
-
-class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
+class ExpenseTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,19 +14,21 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         appBar: AppBar(
           title: const Text('Personal Expenses Tracker'),
         ),
-        body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: double.infinity,
-              child: const Card(
-                elevation: 5,
-                child: Text("CHART"),
+        body: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity,
+                child: const Card(
+                  elevation: 5,
+                  child: Text("CHART"),
+                ),
               ),
-            ),
-            const UserTransaction(),
-          ],
+              const UserTransaction(),
+            ],
+          ),
         ),
       ),
     );

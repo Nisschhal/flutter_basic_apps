@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatefulWidget {
-  const NewTransaction({super.key});
+class NewTransaction extends StatelessWidget {
+  final Function _addNewTransactionHandler;
+  NewTransaction(this._addNewTransactionHandler, {super.key});
 
-  @override
-  State<NewTransaction> createState() => _NewTransactionState();
-}
-
-class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
   final priceController = TextEditingController();
+
+  void _addTransaction() {
+    final enteredTitle = titleController.text;
+    final enteredPrice = double.parse(priceController.text);
+
+    if (enteredTitle.isEmpty || enteredPrice <= 0) {
+      return;
+    }
+    _addNewTransactionHandler(enteredTitle, enteredPrice);
+    _resetTexFields();
+  }
+
+  void _resetTexFields() {
+    titleController.text = '';
+    priceController.text = '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +36,18 @@ class _NewTransactionState extends State<NewTransaction> {
                   labelText: 'Title',
                 ),
                 controller: titleController,
+                onSubmitted: (_) => _addTransaction,
               ),
               TextField(
                 decoration: const InputDecoration(labelText: 'Price'),
                 controller: priceController,
+                onSubmitted: (_) => _addTransaction,
               ),
               TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.purple),
-                  onPressed: () {
-                    print(titleController.text);
-                    print(priceController.text);
-                  },
-                  child: const Text('Add Transaction'))
+                style: TextButton.styleFrom(foregroundColor: Colors.purple),
+                onPressed: _addTransaction,
+                child: const Text('Add Transaction'),
+              )
             ],
           )),
     );
