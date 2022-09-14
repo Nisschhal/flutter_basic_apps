@@ -39,20 +39,32 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
                   return Card(
                     child: Row(children: [
                       Container(
-                        margin: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 15),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple),
+                          border: Border.all(color: Colors.purple, width: 2),
                         ),
                         child: Text(
-                          tx.price.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          '\$${tx.price}',
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple),
                         ),
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(tx.title),
-                          Text(tx.date.toString()),
+                          Text(
+                            tx.title,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            tx.date.toString(),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
                         ],
                       )
                     ]),
