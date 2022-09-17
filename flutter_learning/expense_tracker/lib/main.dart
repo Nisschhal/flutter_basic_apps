@@ -4,9 +4,18 @@ import 'package:expense_tracker/widgets/newTransaction.dart';
 import 'package:expense_tracker/widgets/transactionList.dart';
 import 'package:expense_tracker/widgets/userTransaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // initalizing the widgets flutter bining to set the device orientation
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // only run when device orientation is up and down
+  DeviceOrientation.portraitDown;
+  DeviceOrientation.portraitUp;
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
