@@ -52,53 +52,60 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-          padding: EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Title',
+    return SingleChildScrollView(
+      child: Card(
+        child: Container(
+            height: MediaQuery.of(context).size.height * .8,
+            margin: EdgeInsets.only(
+                // top: 20,
+                left: 20,
+                right: 20,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 100),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextField(
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
+                  ),
+                  controller: titleController,
+                  onSubmitted: (_) => _addTransaction(),
                 ),
-                controller: titleController,
-                onSubmitted: (_) => _addTransaction(),
-              ),
-              TextField(
-                decoration: const InputDecoration(labelText: 'Price'),
-                controller: priceController,
-                onSubmitted: (_) => _addTransaction(),
-                keyboardType: TextInputType.number,
-              ),
-              Container(
-                  height: 70,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(_pickedDate == null
-                            ? 'No Date chosen'
-                            : 'Picked Date: ${DateFormat.yMd().format(_pickedDate!)}'),
-                      ),
-                      TextButton(
-                        onPressed: _showDatePicker,
-                        child: const Text(
-                          'Choose a date',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                TextField(
+                  decoration: const InputDecoration(labelText: 'Price'),
+                  controller: priceController,
+                  onSubmitted: (_) => _addTransaction(),
+                  keyboardType: TextInputType.number,
+                ),
+                Container(
+                    height: 70,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(_pickedDate == null
+                              ? 'No Date chosen'
+                              : 'Picked Date: ${DateFormat.yMd().format(_pickedDate!)}'),
                         ),
-                      ),
-                    ],
-                  )),
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Theme.of(context).primaryColor,
-                  side: BorderSide(color: Theme.of(context).primaryColor),
-                ),
-                onPressed: _addTransaction,
-                child: const Text('Add Transaction'),
-              )
-            ],
-          )),
+                        TextButton(
+                          onPressed: _showDatePicker,
+                          child: const Text(
+                            'Choose a date',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    )),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Theme.of(context).primaryColor,
+                    side: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
+                  onPressed: _addTransaction,
+                  child: const Text('Add Transaction'),
+                )
+              ],
+            )),
+      ),
     );
   }
 }
