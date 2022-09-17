@@ -52,9 +52,11 @@ class ExpenseTrackerApp extends StatefulWidget {
 
 class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
   final List<Transaction> _transactions = [
-    Transaction(id: '01', title: 'Shoe', price: 100, date: DateTime.now()),
-    Transaction(id: '02', title: 'Bag', price: 200, date: DateTime.now()),
+    // Transaction(id: '01', title: 'Shoe', price: 100, date: DateTime.now()),
+    // Transaction(id: '02', title: 'Bag', price: 200, date: DateTime.now()),
   ];
+
+  bool _showChart = false;
 
   List<Transaction> get _getRecentTransactions {
     return _transactions
@@ -88,6 +90,9 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
 
   @override
   Widget build(BuildContext context) {
+    final _isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       backgroundColor: Theme.of(context).primaryColor,
       title: Text(
@@ -100,6 +105,73 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         ),
       ],
     );
+
+    final txList = TransactionList(_transactions, _deleteExpense);
+
+    final _landScapeMode = Column(
+      children: [
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'SHOW CHART',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Switch(
+                value: _showChart,
+                onChanged: (val) {
+                  setState(() {
+                    _showChart = val;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        _showChart
+            ? Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context)
+                            .padding
+                            .top) * // take the appBar height to deduct the remaining screen to act as 100%.
+                    .65,
+                child: Chart(_getRecentTransactions),
+              )
+            : Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context)
+                            .padding
+                            .top) * // take the appBar height to deduct the remaining screen to act as 100%.
+                    1,
+                child: TransactionList(_transactions, _deleteExpense),
+              ),
+      ],
+    );
+    final _portraitMode = Column(
+      children: [
+        Container(
+            height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context)
+                        .padding
+                        .top) * // take the appBar height to deduct the remaining screen to act as 100%.
+                .30,
+            child: Chart(_getRecentTransactions)),
+        Container(
+          height: (MediaQuery.of(context).size.height -
+                  appBar.preferredSize.height -
+                  MediaQuery.of(context)
+                      .padding
+                      .top) * // take the appBar height to deduct the remaining screen to act as 100%.
+              .70,
+          child: txList,
+        ),
+      ],
+    );
+
     return Scaffold(
       appBar: appBar,
       floatingActionButton: FloatingActionButton(
@@ -112,26 +184,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context)
-                          .padding
-                          .top) * // take the appBar height to deduct the remaining screen to act as 100%.
-                  0.25,
-              child: Chart(_getRecentTransactions),
-            ),
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context)
-                          .padding
-                          .top) * // take the appBar height to deduct the remaining screen to act as 100%.
-                  0.75,
-              child: TransactionList(_transactions, _deleteExpense),
-            ),
-          ],
+          children: [_isLandScape ? _landScapeMode : _portraitMode],
         ),
       ),
     );
