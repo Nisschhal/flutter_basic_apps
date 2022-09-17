@@ -44,6 +44,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     print(lastWeekTransactions);
     return Card(
+      elevation: 5,
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Row(

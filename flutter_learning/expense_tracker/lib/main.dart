@@ -79,19 +79,20 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          'Personal Expenses Tracker',
-        ),
-        actions: [
-          IconButton(
-            onPressed: () => _showNewTransaction(context),
-            icon: const Icon(Icons.add),
-          ),
-        ],
+    final appBar = AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      title: Text(
+        'Personal Expenses Tracker',
       ),
+      actions: [
+        IconButton(
+          onPressed: () => _showNewTransaction(context),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () => _showNewTransaction(context),
@@ -103,8 +104,24 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_getRecentTransactions),
-            TransactionList(_transactions, _deleteExpense),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context)
+                          .padding
+                          .top) * // take the appBar height to deduct the remaining screen to act as 100%.
+                  0.25,
+              child: Chart(_getRecentTransactions),
+            ),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context)
+                          .padding
+                          .top) * // take the appBar height to deduct the remaining screen to act as 100%.
+                  0.75,
+              child: TransactionList(_transactions, _deleteExpense),
+            ),
           ],
         ),
       ),
