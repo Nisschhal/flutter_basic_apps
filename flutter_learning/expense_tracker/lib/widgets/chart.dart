@@ -31,7 +31,7 @@ class Chart extends StatelessWidget {
         'day': DateFormat.E().format(weekDayDate).substring(0, 2),
         'price': totalWeekExpense
       };
-    });
+    }).reversed.toList();
   }
 
   double get weekTotalExpense {
@@ -43,18 +43,22 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(lastWeekTransactions);
-    return Container(
-      child: Card(
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(10),
         child: Row(
-          children: [
-            ...lastWeekTransactions.map((weekday) {
-              return ChartBar(
-                  weekDay: weekday['day'] as String,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: lastWeekTransactions.map((weekday) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                  label: weekday['day'] as String,
                   dayExpense: weekday['price'] as double,
-                  spentPctOfTotal:
-                      (weekday['price'] as double) / weekTotalExpense);
-            }).toList(),
-          ],
+                  spentPctOfTotal: weekTotalExpense == 0.0
+                      ? 0.0
+                      : (weekday['price'] as double) / weekTotalExpense),
+            );
+          }).toList(),
         ),
       ),
     );

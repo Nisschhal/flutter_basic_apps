@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
-  final String weekDay;
+  final String label;
   final double dayExpense;
   final double spentPctOfTotal;
 
   const ChartBar(
-      {required this.weekDay,
+      {required this.label,
       required this.dayExpense,
       required this.spentPctOfTotal,
       super.key});
@@ -15,10 +15,13 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('${dayExpense.toStringAsFixed(0)}'),
         Container(
-          height: 60,
-          width: 20,
+            height: 20,
+            child: FittedBox(child: Text('${dayExpense.toStringAsFixed(0)}'))),
+        SizedBox(height: 10),
+        Container(
+          height: 80,
+          width: 10,
           child: Stack(
             children: [
               Container(
@@ -42,7 +45,8 @@ class ChartBar extends StatelessWidget {
             ],
           ),
         ),
-        Text(weekDay),
+        SizedBox(height: 10),
+        Text(label),
       ],
     );
   }
