@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
         fontFamily: 'Quicksand',
+        errorColor: Colors.red,
         textTheme: ThemeData.light().textTheme.copyWith(
               titleMedium: const TextStyle(
                 fontFamily: 'OpenSans',
@@ -53,15 +54,9 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         .toList();
   }
 
-  void _addNewTransaction(
-    String title,
-    double price,
-  ) {
+  void _addNewTransaction(String title, double price, DateTime date) {
     final value = Transaction(
-        id: DateTime.now().toString(),
-        title: title,
-        price: price,
-        date: DateTime.now());
+        id: DateTime.now().toString(), title: title, price: price, date: date);
     setState(() {
       _transactions.add(value);
     });
@@ -74,6 +69,12 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         return NewTransaction(_addNewTransaction);
       },
     );
+  }
+
+  void _deleteExpense(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
+    });
   }
 
   @override
@@ -103,7 +104,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_getRecentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _deleteExpense),
           ],
         ),
       ),

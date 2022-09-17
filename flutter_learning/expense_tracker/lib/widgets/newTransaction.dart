@@ -18,11 +18,12 @@ class _NewTransactionState extends State<NewTransaction> {
   void _addTransaction() {
     final enteredTitle = titleController.text;
     final enteredPrice = double.parse(priceController.text);
+    final selectedDate = _pickedDate;
 
-    if (enteredTitle.isEmpty || enteredPrice <= 0) {
+    if (enteredTitle.isEmpty || enteredPrice <= 0 || selectedDate == null) {
       return;
     }
-    widget._addNewTransactionHandler(enteredTitle, enteredPrice);
+    widget._addNewTransactionHandler(enteredTitle, enteredPrice, selectedDate);
     _resetTexFields();
     // pop off the latest widget from the widget tree.
     Navigator.of(context).pop();
