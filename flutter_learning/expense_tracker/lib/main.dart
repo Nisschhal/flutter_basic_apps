@@ -1,4 +1,5 @@
 import 'package:expense_tracker/models/transaction.dart';
+import 'package:expense_tracker/widgets/chart.dart';
 import 'package:expense_tracker/widgets/newTransaction.dart';
 import 'package:expense_tracker/widgets/transactionList.dart';
 import 'package:expense_tracker/widgets/userTransaction.dart';
@@ -41,9 +42,16 @@ class ExpenseTrackerApp extends StatefulWidget {
 
 class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
   final List<Transaction> _transactions = [
-    // Transaction(id: '01', title: 'Shoe', price: 100, date: DateTime.now()),
-    // Transaction(id: '02', title: 'Bag', price: 200, date: DateTime.now()),
+    Transaction(id: '01', title: 'Shoe', price: 100, date: DateTime.now()),
+    Transaction(id: '02', title: 'Bag', price: 200, date: DateTime.now()),
   ];
+
+  List<Transaction> get _getRecentTransactions {
+    return _transactions
+        .where((transaction) => transaction.date
+            .isAfter(DateTime.now().subtract(const Duration(days: 7))))
+        .toList();
+  }
 
   void _addNewTransaction(
     String title,
@@ -94,13 +102,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              width: double.infinity,
-              child: const Card(
-                elevation: 5,
-                child: Text("CHART"),
-              ),
-            ),
+            Chart(_getRecentTransactions),
             TransactionList(_transactions),
           ],
         ),
