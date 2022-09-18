@@ -90,8 +90,8 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
 
   @override
   Widget build(BuildContext context) {
-    final _isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final _isLandScape = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       backgroundColor: Theme.of(context).primaryColor,
@@ -131,19 +131,17 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         ),
         _showChart
             ? Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context)
-                            .padding
+                        mediaQuery.padding
                             .top) * // take the appBar height to deduct the remaining screen to act as 100%.
                     .65,
                 child: Chart(_getRecentTransactions),
               )
             : Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context)
-                            .padding
+                        mediaQuery.padding
                             .top) * // take the appBar height to deduct the remaining screen to act as 100%.
                     1,
                 child: TransactionList(_transactions, _deleteExpense),
@@ -153,18 +151,16 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
     final _portraitMode = Column(
       children: [
         Container(
-            height: (MediaQuery.of(context).size.height -
+            height: (mediaQuery.size.height -
                     appBar.preferredSize.height -
-                    MediaQuery.of(context)
-                        .padding
+                    mediaQuery.padding
                         .top) * // take the appBar height to deduct the remaining screen to act as 100%.
                 .30,
             child: Chart(_getRecentTransactions)),
         Container(
-          height: (MediaQuery.of(context).size.height -
+          height: (mediaQuery.size.height -
                   appBar.preferredSize.height -
-                  MediaQuery.of(context)
-                      .padding
+                  mediaQuery.padding
                       .top) * // take the appBar height to deduct the remaining screen to act as 100%.
               .70,
           child: txList,
