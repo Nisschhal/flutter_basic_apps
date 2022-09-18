@@ -108,7 +108,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
 
     final txList = TransactionList(_transactions, _deleteExpense);
 
-    final _landScapeMode = Column(
+    final Widget _landScapeMode = Column(
       children: [
         Container(
           child: Row(
