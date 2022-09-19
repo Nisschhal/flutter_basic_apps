@@ -16,7 +16,7 @@ class CategoryItem extends StatelessWidget {
               colors: [category.color.withOpacity(0.7), category.color],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter)),
-      child: Text(category.title),
+      child: Text(category.title, style: Theme.of(context).textTheme.headline5),
     );
   }
 }
