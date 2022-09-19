@@ -4,7 +4,7 @@ import 'package:meal_app/dummyDate.dart';
 
 import 'package:meal_app/models/category_model.dart';
 
-import './categoryItem.dart';
+import '../widgets/categoryItem.dart';
 
 class CateogryScreen extends StatelessWidget {
   const CateogryScreen({super.key});
