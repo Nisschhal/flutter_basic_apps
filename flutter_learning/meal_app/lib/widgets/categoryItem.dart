@@ -13,7 +13,7 @@ class CategoryItem extends StatelessWidget {
   //   }));
   // }
   void selectMealHandler(BuildContext context) {
-    Navigator.of(context).pushNamed('/category-meal',
+    Navigator.of(context).pushNamed('/category-meal-screen',
         arguments: {'id': category.id, 'title': category.title});
   }
 

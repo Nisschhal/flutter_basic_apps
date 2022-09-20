@@ -16,6 +16,15 @@ class CategoryMealScreen extends StatelessWidget {
 
     final categoryMeals =
         DUMMY_MEALS.where((element) => element.categories.contains(categoryId));
+    void selectMeal(String id, String title) {
+      Navigator.of(context).pushNamed(
+        '/meal-detail-screen',
+        arguments: {
+          'id': id,
+          'title': title,
+        },
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -23,15 +32,20 @@ class CategoryMealScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (ctx, index) {
-          return MealItem(
-              id: categoryMeals.elementAt(index).id,
-              title: categoryMeals.elementAt(index).title,
-              ingredients: categoryMeals.elementAt(index).ingredients,
-              steps: categoryMeals.elementAt(index).steps,
-              duration: categoryMeals.elementAt(index).duration,
-              imageUrl: categoryMeals.elementAt(index).imageUrl,
-              complexity: categoryMeals.elementAt(index).complexity,
-              affordability: categoryMeals.elementAt(index).affordability);
+          return InkWell(
+            onTap: () => selectMeal(categoryMeals.elementAt(index).id,
+                categoryMeals.elementAt(index).title),
+            splashColor: Theme.of(context).primaryColor,
+            child: MealItem(
+                id: categoryMeals.elementAt(index).id,
+                title: categoryMeals.elementAt(index).title,
+                ingredients: categoryMeals.elementAt(index).ingredients,
+                steps: categoryMeals.elementAt(index).steps,
+                duration: categoryMeals.elementAt(index).duration,
+                imageUrl: categoryMeals.elementAt(index).imageUrl,
+                complexity: categoryMeals.elementAt(index).complexity,
+                affordability: categoryMeals.elementAt(index).affordability),
+          );
         },
         itemCount: categoryMeals.length,
       ),
