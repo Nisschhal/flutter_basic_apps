@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_me/screens/cart_screen.dart';
 import 'package:shop_me/widgets/ProductItem.dart';
+import 'package:shop_me/widgets/drawer.dart';
 import '../models/product.dart';
 import '../providers/cart.dart';
 import '../widgets/productGrid.dart';
@@ -10,6 +11,7 @@ import '../widgets/badge.dart';
 enum FilterOptions { OnlyFavorite, ShowAll }
 
 class ProductOverviewScreen extends StatefulWidget {
+  static final routeName = '/shop';
   const ProductOverviewScreen({super.key});
 
   @override
@@ -95,6 +97,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductGrid(
         showFavorite: _showFavoriteProduct,
       ),

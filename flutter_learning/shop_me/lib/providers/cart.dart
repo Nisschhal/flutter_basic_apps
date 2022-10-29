@@ -54,4 +54,14 @@ class Cart with ChangeNotifier {
     }
     notifyListeners(); // listen to changes and update to state and data
   }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _items.clear();
+    notifyListeners();
+  }
 }

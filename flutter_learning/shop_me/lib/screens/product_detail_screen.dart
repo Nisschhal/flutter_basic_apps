@@ -22,7 +22,21 @@ class ProductDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(loadedProduct.title),
       ),
-      body: Center(child: Text(loadedProduct.id)),
+      body: Card(
+        child: Column(
+          children: [
+            Image.network(loadedProduct.imageUrl),
+            Text(
+              '\$${loadedProduct.price.toString()}',
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                  fontSize: 20),
+            ),
+            Text(loadedProduct.description),
+          ],
+        ),
+      ),
     );
   }
 }
