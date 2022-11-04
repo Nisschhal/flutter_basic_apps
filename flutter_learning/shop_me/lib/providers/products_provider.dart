@@ -51,8 +51,19 @@ class ProductsProvider with ChangeNotifier {
     return _products.firstWhere((element) => element.id == id);
   }
 
-  void addProduct(value) {
-    _products.add(value);
+  void addProduct(Product product) {
+    _products.add(Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl));
+    print('product Saved!');
     notifyListeners(); // helps to notify, state and change the dependent widgets
+  }
+
+  void updateProduct(String id, Product product) {
+    int _updateIndex = _products.indexWhere((element) => element.id == id);
+    _products[_updateIndex] = product;
   }
 }

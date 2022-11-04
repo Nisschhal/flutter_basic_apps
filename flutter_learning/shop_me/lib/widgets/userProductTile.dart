@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../screens/edit_product_screen.dart';
+
 class UserProductTile extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
   const UserProductTile(
-      {super.key, required this.imageUrl, required this.title});
+      {super.key,
+      required this.imageUrl,
+      required this.title,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,9 @@ class UserProductTile extends StatelessWidget {
         width: 100,
         child: Row(children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(EditProductScreen.routeName, arguments: id);
+            },
             icon: Icon(Icons.edit),
             color: Theme.of(context).primaryColor,
           ),
