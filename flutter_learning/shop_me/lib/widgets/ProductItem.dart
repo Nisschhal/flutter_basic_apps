@@ -54,6 +54,22 @@ class ProductItem extends StatelessWidget {
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
+              // Scaffold.of(context).openDrawer(); // helps to connect to nearest scaffold and open drawer from there
+              // ScaffoldMessenger.of(context)
+              //     .hideCurrentSnackBar(); // hide the previous snackbar is there are any
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text("Added item to Cart!"),
+                  duration: const Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'UNDO',
+                    onPressed: () {
+                      cart.removeSingleItem(
+                          product.id); // when UNDO pressed then undo added cart
+                    },
+                  ),
+                ),
+              );
             },
           ),
         ),

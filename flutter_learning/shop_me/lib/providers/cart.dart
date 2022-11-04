@@ -32,6 +32,30 @@ class Cart with ChangeNotifier {
     return total;
   }
 
+  // remove item or decrease quantity using productId
+  void removeSingleItem(String productId) {
+    // if no item with given productId
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+
+    // if quantity is more than 1 then decrement with 1
+    if (_items[productId]!.quantity > 1) {
+      _items.update(
+        productId,
+        (existingCartItem) => CartItem(
+            id: existingCartItem.id,
+            title: existingCartItem.title,
+            quantity: existingCartItem.quantity - 1,
+            price: existingCartItem.price),
+      );
+    } else {
+      // if only one item/quantity then remove it from
+      _items.remove(productId);
+    }
+    notifyListeners(); // listen to updates
+  }
+
   void addItem(String productId, double price, String title) {
     // update the quantity if _item has cart with productId
     if (_items.containsKey(productId)) {

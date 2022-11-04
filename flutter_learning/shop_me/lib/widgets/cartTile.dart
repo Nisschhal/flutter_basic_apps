@@ -34,6 +34,29 @@ class CartTile extends StatelessWidget {
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('Are you sure?'),
+                  content: Text("Do you want to remove the cart item?"),
+                  actions: [
+                    // Action buttons to yes or no
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(
+                              false); // dissmiss the alert dialog and return
+                        },
+                        child: const Text('NO')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pop(true); // confirm the dismiss action
+                        },
+                        child: const Text('YES'))
+                  ],
+                ));
+      },
       child: Card(
         margin: EdgeInsets.all(5),
         child: ListTile(
