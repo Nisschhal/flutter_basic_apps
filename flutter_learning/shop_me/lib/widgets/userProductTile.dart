@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_me/providers/products_provider.dart';
 
 import '../screens/edit_product_screen.dart';
 
@@ -27,13 +29,19 @@ class UserProductTile extends StatelessWidget {
         child: Row(children: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed(EditProductScreen.routeName, arguments: id);
+              Navigator.of(context)
+                  .pushNamed(EditProductScreen.routeName, arguments: id);
             },
             icon: Icon(Icons.edit),
             color: Theme.of(context).primaryColor,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<ProductsProvider>(context, listen: false)
+                  .deleteProduct(id);
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Product Deleted Successfully!")));
+            },
             icon: Icon(Icons.delete),
             color: Theme.of(context).errorColor,
           ),

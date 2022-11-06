@@ -62,8 +62,28 @@ class ProductsProvider with ChangeNotifier {
     notifyListeners(); // helps to notify, state and change the dependent widgets
   }
 
-  void updateProduct(String id, Product product) {
-    int _updateIndex = _products.indexWhere((element) => element.id == id);
-    _products[_updateIndex] = product;
+//   void updateProduct(String id, Product product) {
+//     int _updateIndex = _products.indexWhere((element) => element.id == id);
+//     _products[_updateIndex] = Product(
+//         id: product.id,
+//         title: product.title,
+//         description: product.description,
+//         price: product.price,
+//         imageUrl: product.imageUrl);
+//   }
+  void updateProduct(String id, Product newProduct) {
+    final prodIndex = _products.indexWhere((prod) => prod.id == id);
+    if (prodIndex >= 0) {
+      _products[prodIndex] = newProduct;
+      notifyListeners();
+    } else {
+      print('...');
+    }
+  }
+
+  void deleteProduct(String id) {
+    final _deleteProduct = getproductById(id);
+    _products.remove(_deleteProduct);
+    notifyListeners();
   }
 }
