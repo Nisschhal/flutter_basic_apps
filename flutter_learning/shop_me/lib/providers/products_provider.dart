@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_me/models/product.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProductsProvider with ChangeNotifier {
   List<Product> _products = [
@@ -51,15 +53,66 @@ class ProductsProvider with ChangeNotifier {
     return _products.firstWhere((element) => element.id == id);
   }
 
-  void addProduct(Product product) {
-    _products.add(Product(
-        id: DateTime.now().toString(),
+  Future<void> getAndSetProducts() async {
+    final url = Uri.parse(
+        'https://shop-me-37394-default-rtdb.firebaseio.com/products.json');
+    try {
+      final response = await http.get(url);
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Product> loadedProducts = [];
+
+      extractedData.forEach(
+        (productId, product) => loadedProducts.add(
+          Product(
+            id: productId,
+            title: product['title'],
+            description: product['description'],
+            price: product['price'],
+            imageUrl: product["imageUrl"],
+            isFavorite: product['isFavorite'],
+          ),
+        ),
+      );
+
+      _products = loadedProducts;
+      print(json.decode(response.body));
+      notifyListeners();
+    } catch (err) {
+      throw (err);
+    }
+  }
+
+  Future<void> addProduct(Product product) async {
+    // add the .json exentsion
+    final url = Uri.parse(
+        'https://shop-me-37394-default-rtdb.firebaseio.com/products.json');
+
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imageUrl': product.imageUrl,
+          'isFavorite': product.isFavorite
+        }),
+      );
+      final newProduct = Product(
         title: product.title,
         description: product.description,
         price: product.price,
-        imageUrl: product.imageUrl));
-    print('product Saved!');
-    notifyListeners(); // helps to notify, state and change the dependent widgets
+        imageUrl: product.imageUrl,
+        id: json.decode(response.body)['name'],
+      );
+      _products.add(newProduct);
+      print('product Saved Successfully!');
+      notifyListeners(); // helps to notify, state and change the dependent widgets
+    } catch (err) {
+      print(err);
+      throw err;
+    }
   }
 
 //   void updateProduct(String id, Product product) {
